@@ -23,3 +23,15 @@
 
 ## Requisição `/auth/login`
 ![Requisição `/auth/login`](images/login.png)
+
+## Criação de Tarefas no Microsserviço
+![Criação de Tarefas no Microsserviço](images/create-tasks-microservice.png)
+
+## Recuperação de Tarefas com Redis
+![Recuperação de Tarefas com Redis](images/get-task-redis.png)
+
+## Logs de Execução - Parte 1
+![Logs de Execução - Parte 1](images/log1.png)
+
+## Logs de Execução - Parte 2
+![Logs de Execução - Parte 2](images/log2.png)
