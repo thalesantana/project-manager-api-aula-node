@@ -5,29 +5,31 @@ import { UsersRepositoryService } from 'src/infrastructure/database/repositories
 
 @Injectable()
 export class GetProjectByIdService {
-    
-    constructor(
-        private readonly usersRepository: UsersRepositoryService,
-        private readonly projectsRepository: ProjectsRepositoryService,
-    ) {}
-    
-    async execute(payload: {
-        userId: number;
-        projectId: number;
-    }): Promise<IProject> {
-        // fetch user data
-        const userData = await this.usersRepository.findById(payload.userId);
-        
-        if (!userData) {
-            throw new Error('Usuário não encontrado');
-        }
-        
-        const project = await this.projectsRepository.findById(payload.projectId);
-        
-        if (!project) {
-            throw new Error('Erro ao recuperar projetos');
-        }
-        
-        return project;
+  constructor(
+    private readonly usersRepository: UsersRepositoryService,
+    private readonly projectsRepository: ProjectsRepositoryService,
+  ) {}
+
+  async execute(payload: {
+    userId: number;
+    projectId: number;
+  }): Promise<IProject> {
+    // fetch user data
+    const userData = await this.usersRepository.findById(payload.userId);
+
+    if (!userData) {
+      throw new Error('Usuário não encontrado');
     }
+
+    const project = await this.projectsRepository.findById(
+      payload.projectId,
+      payload.userId,
+    );
+
+    if (!project) {
+      throw new Error('Erro ao recuperar projetos');
+    }
+
+    return project;
+  }
 }

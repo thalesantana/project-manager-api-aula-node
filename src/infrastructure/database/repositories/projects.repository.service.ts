@@ -6,22 +6,22 @@ import { IProjectsRepository } from 'src/domain/repositories/projects-repository
 
 @Injectable()
 export class ProjectsRepositoryService
-    extends Repository<ProjectEntity>
-    implements IProjectsRepository
+  extends Repository<ProjectEntity>
+  implements IProjectsRepository
 {
-    constructor(dataSource: DataSource) {
-        super(ProjectEntity, dataSource.createEntityManager());
-    }
+  constructor(dataSource: DataSource) {
+    super(ProjectEntity, dataSource.createEntityManager());
+  }
 
-    findAll(userId: number): Promise<IProject[]> {
-        return this.findBy({ user: { id: userId } });
-    }
-    
-    findById(id: number): Promise<IProject> {
-        return this.findOneBy({ id }) as Promise<IProject>;
-    }
-    
-    add(payload: DeepPartial<IProject>): Promise<IProject> {
-        return this.save(payload);
-    }
+  findAll(userId: number): Promise<IProject[]> {
+    return this.findBy({ user: { id: userId } });
+  }
+
+  findById(id: number, userId: number): Promise<IProject> {
+    return this.findOneBy({ id, user: { id: userId } }) as Promise<IProject>;
+  }
+
+  add(payload: DeepPartial<IProject>): Promise<IProject> {
+    return this.save(payload);
+  }
 }

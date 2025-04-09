@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { ITask } from 'src/domain/interfaces/task.interface';
-import { CreateTaskDto } from 'src/gateways/controllers/tasks/dtos/create-task.dto';
-import { ProjectsRepositoryService } from 'src/infrastructure/database/repositories/projects.repository.service';
-import { TasksRepositoryService } from 'src/infrastructure/database/repositories/tasks.repository.service';
-import { UsersRepositoryService } from 'src/infrastructure/database/repositories/users.repository.service';
 import { BaseUseCase } from '../base-use-case';
+import { TasksRepositoryService } from 'src/infrastructure/database/repositories/tasks.repository.service';
+import { CreateTaskDto } from 'src/gateways/controllers/tasks/dtos/create-task.dto';
+import { ITask } from 'src/domain/interfaces/task.interface';
+import { UsersRepositoryService } from 'src/infrastructure/database/repositories/users.repository.service';
+import { ProjectsRepositoryService } from 'src/infrastructure/database/repositories/projects.repository.service';
 
 @Injectable()
 export class CreateTaskService implements BaseUseCase {
+
   constructor(
     private readonly usersRepository: UsersRepositoryService,
     private readonly tasksRepository: TasksRepositoryService,
@@ -26,6 +27,7 @@ export class CreateTaskService implements BaseUseCase {
 
     const projectData = await this.projcetsRepository.findById(
       payload.task.projectId,
+      payload.userId,
     );
 
     if (!projectData) {

@@ -7,26 +7,26 @@ import { ITask } from 'src/domain/interfaces/task.interface';
 
 @Injectable()
 export class UpdateTaskService implements BaseUseCase {
-    constructor(
-        private readonly usersRepository: UsersRepositoryService,
-        private readonly tasksRepository: TasksRepositoryService,
-    ) {}
+  constructor(
+    private readonly usersRepository: UsersRepositoryService,
+    private readonly tasksRepository: TasksRepositoryService,
+  ) {}
 
-    async execute(payload: {
-        task: UpdateTaskDto;
-        userId: number;
-    }): Promise<ITask> {
-        const userData = await this.usersRepository.findById(payload.userId);
-        if (!userData) {
-            throw new Error('Usuário não encontrado');
-        }
-
-        await this.tasksRepository.updateById(payload.task);
-        const task = this.tasksRepository.findById(payload.task.id);
-        if (!task) {
-            throw new Error('Tarefa não encontrado');
-        }
-        
-        return task;
+  async execute(payload: {
+    task: UpdateTaskDto;
+    userId: number;
+  }): Promise<ITask> {
+    const userData = await this.usersRepository.findById(payload.userId);
+    if (!userData) {
+      throw new Error('Usuário não encontrado');
     }
+
+    await this.tasksRepository.updateById(payload.task);
+    const task = this.tasksRepository.findById(payload.task.id, payload.userId);
+    if (!task) {
+      throw new Error('Tarefa não encontrado');
+    }
+
+    return task;
+  }
 }

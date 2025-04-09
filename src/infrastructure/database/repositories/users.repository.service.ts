@@ -11,9 +11,13 @@ export class UsersRepositoryService
     constructor(dataSource: DataSource) {
         super(UserEntity, dataSource.createEntityManager());
     }
-    
+
+    findByEmail(email: string): Promise<IUser> {
+        return this.findOneByOrFail({ email }) as Promise<IUser>;
+    }
+
     findById(id: number): Promise<IUser> {
-        return this.findOneBy({ id }) as Promise<IUser>;
+        return this.findOneByOrFail({ id }) as Promise<IUser>;
     }
     
     add(payload: DeepPartial<IUser>): Promise<IUser> {
